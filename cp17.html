@@ -1,0 +1,3547 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>18&nbsp; Goal System Design – dream_vision_goals</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./cp18.html" rel="next">
+<link href="./cp16.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-5ccb035bea26c1e21f80f44cf7c27909.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./p6.html">Part VI — The Direction System</a></li><li class="breadcrumb-item"><a href="./cp17.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Goal System Design</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">dream_vision_goals</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./p1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part I — Dream and Possibility</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">What Is a Dream?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Possibility and Future Imagination</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dream, Fantasy, and Escape</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./p2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part II — Vision and Direction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vision as Structured Future Image</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Life Direction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mission and Contribution</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./p3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part III — Goals and Milestones</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">What Is a Goal?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Milestones and Stages</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Goal Quality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./p4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part IV — Strategy and Path</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Strategy as Path Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp11.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Time Horizon</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Priority and Sequencing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./p5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part V — Uncertainty and Revision</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Planning Under Uncertainty</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">When Goals Change</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Failure, Delay, and Rerouting</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./p6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Part VI — The Direction System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp16.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Life Direction Map</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp17.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Goal System Design</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cp18.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">From Possibility to Commitment</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-goal-list-is-not-a-goal-system" id="toc-a-goal-list-is-not-a-goal-system" class="nav-link active" data-scroll-target="#a-goal-list-is-not-a-goal-system"><span class="header-section-number">18.1</span> A Goal List Is Not a Goal System</a></li>
+  <li><a href="#the-purpose-of-a-goal-system" id="toc-the-purpose-of-a-goal-system" class="nav-link" data-scroll-target="#the-purpose-of-a-goal-system"><span class="header-section-number">18.2</span> The Purpose of a Goal System</a></li>
+  <li><a href="#goals-across-life-domains" id="toc-goals-across-life-domains" class="nav-link" data-scroll-target="#goals-across-life-domains"><span class="header-section-number">18.3</span> Goals Across Life Domains</a></li>
+  <li><a href="#leading-goals" id="toc-leading-goals" class="nav-link" data-scroll-target="#leading-goals"><span class="header-section-number">18.4</span> Leading Goals</a></li>
+  <li><a href="#supporting-goals" id="toc-supporting-goals" class="nav-link" data-scroll-target="#supporting-goals"><span class="header-section-number">18.5</span> Supporting Goals</a></li>
+  <li><a href="#foundation-goals" id="toc-foundation-goals" class="nav-link" data-scroll-target="#foundation-goals"><span class="header-section-number">18.6</span> Foundation Goals</a></li>
+  <li><a href="#maintenance-goals" id="toc-maintenance-goals" class="nav-link" data-scroll-target="#maintenance-goals"><span class="header-section-number">18.7</span> Maintenance Goals</a></li>
+  <li><a href="#growth-goals" id="toc-growth-goals" class="nav-link" data-scroll-target="#growth-goals"><span class="header-section-number">18.8</span> Growth Goals</a></li>
+  <li><a href="#output-goals" id="toc-output-goals" class="nav-link" data-scroll-target="#output-goals"><span class="header-section-number">18.9</span> Output Goals</a></li>
+  <li><a href="#decision-goals" id="toc-decision-goals" class="nav-link" data-scroll-target="#decision-goals"><span class="header-section-number">18.10</span> Decision Goals</a></li>
+  <li><a href="#repair-goals" id="toc-repair-goals" class="nav-link" data-scroll-target="#repair-goals"><span class="header-section-number">18.11</span> Repair Goals</a></li>
+  <li><a href="#boundary-goals" id="toc-boundary-goals" class="nav-link" data-scroll-target="#boundary-goals"><span class="header-section-number">18.12</span> Boundary Goals</a></li>
+  <li><a href="#waiting-goals" id="toc-waiting-goals" class="nav-link" data-scroll-target="#waiting-goals"><span class="header-section-number">18.13</span> Waiting Goals</a></li>
+  <li><a href="#abandoned-goals" id="toc-abandoned-goals" class="nav-link" data-scroll-target="#abandoned-goals"><span class="header-section-number">18.14</span> Abandoned Goals</a></li>
+  <li><a href="#goal-hierarchy" id="toc-goal-hierarchy" class="nav-link" data-scroll-target="#goal-hierarchy"><span class="header-section-number">18.15</span> Goal Hierarchy</a></li>
+  <li><a href="#goal-portfolio" id="toc-goal-portfolio" class="nav-link" data-scroll-target="#goal-portfolio"><span class="header-section-number">18.16</span> Goal Portfolio</a></li>
+  <li><a href="#goal-load" id="toc-goal-load" class="nav-link" data-scroll-target="#goal-load"><span class="header-section-number">18.17</span> Goal Load</a></li>
+  <li><a href="#goal-capacity" id="toc-goal-capacity" class="nav-link" data-scroll-target="#goal-capacity"><span class="header-section-number">18.18</span> Goal Capacity</a></li>
+  <li><a href="#goal-conflict" id="toc-goal-conflict" class="nav-link" data-scroll-target="#goal-conflict"><span class="header-section-number">18.19</span> Goal Conflict</a></li>
+  <li><a href="#goal-dependency" id="toc-goal-dependency" class="nav-link" data-scroll-target="#goal-dependency"><span class="header-section-number">18.20</span> Goal Dependency</a></li>
+  <li><a href="#goal-sequencing" id="toc-goal-sequencing" class="nav-link" data-scroll-target="#goal-sequencing"><span class="header-section-number">18.21</span> Goal Sequencing</a></li>
+  <li><a href="#goals-across-time-horizons" id="toc-goals-across-time-horizons" class="nav-link" data-scroll-target="#goals-across-time-horizons"><span class="header-section-number">18.22</span> Goals Across Time Horizons</a></li>
+  <li><a href="#daily-goals" id="toc-daily-goals" class="nav-link" data-scroll-target="#daily-goals"><span class="header-section-number">18.23</span> Daily Goals</a></li>
+  <li><a href="#weekly-goals" id="toc-weekly-goals" class="nav-link" data-scroll-target="#weekly-goals"><span class="header-section-number">18.24</span> Weekly Goals</a></li>
+  <li><a href="#monthly-goals" id="toc-monthly-goals" class="nav-link" data-scroll-target="#monthly-goals"><span class="header-section-number">18.25</span> Monthly Goals</a></li>
+  <li><a href="#seasonal-goals" id="toc-seasonal-goals" class="nav-link" data-scroll-target="#seasonal-goals"><span class="header-section-number">18.26</span> Seasonal Goals</a></li>
+  <li><a href="#yearly-goals" id="toc-yearly-goals" class="nav-link" data-scroll-target="#yearly-goals"><span class="header-section-number">18.27</span> Yearly Goals</a></li>
+  <li><a href="#long-term-direction" id="toc-long-term-direction" class="nav-link" data-scroll-target="#long-term-direction"><span class="header-section-number">18.28</span> Long-Term Direction</a></li>
+  <li><a href="#cross-domain-alignment" id="toc-cross-domain-alignment" class="nav-link" data-scroll-target="#cross-domain-alignment"><span class="header-section-number">18.29</span> Cross-Domain Alignment</a></li>
+  <li><a href="#reusable-goal-evidence" id="toc-reusable-goal-evidence" class="nav-link" data-scroll-target="#reusable-goal-evidence"><span class="header-section-number">18.30</span> Reusable Goal Evidence</a></li>
+  <li><a href="#goal-bottleneck" id="toc-goal-bottleneck" class="nav-link" data-scroll-target="#goal-bottleneck"><span class="header-section-number">18.31</span> Goal Bottleneck</a></li>
+  <li><a href="#goal-redundancy" id="toc-goal-redundancy" class="nav-link" data-scroll-target="#goal-redundancy"><span class="header-section-number">18.32</span> Goal Redundancy</a></li>
+  <li><a href="#goal-overlap" id="toc-goal-overlap" class="nav-link" data-scroll-target="#goal-overlap"><span class="header-section-number">18.33</span> Goal Overlap</a></li>
+  <li><a href="#goal-rhythm" id="toc-goal-rhythm" class="nav-link" data-scroll-target="#goal-rhythm"><span class="header-section-number">18.34</span> Goal Rhythm</a></li>
+  <li><a href="#goal-review-system" id="toc-goal-review-system" class="nav-link" data-scroll-target="#goal-review-system"><span class="header-section-number">18.35</span> Goal Review System</a></li>
+  <li><a href="#weekly-goal-review" id="toc-weekly-goal-review" class="nav-link" data-scroll-target="#weekly-goal-review"><span class="header-section-number">18.36</span> Weekly Goal Review</a></li>
+  <li><a href="#monthly-goal-review" id="toc-monthly-goal-review" class="nav-link" data-scroll-target="#monthly-goal-review"><span class="header-section-number">18.37</span> Monthly Goal Review</a></li>
+  <li><a href="#seasonal-goal-review" id="toc-seasonal-goal-review" class="nav-link" data-scroll-target="#seasonal-goal-review"><span class="header-section-number">18.38</span> Seasonal Goal Review</a></li>
+  <li><a href="#goal-system-failure-modes" id="toc-goal-system-failure-modes" class="nav-link" data-scroll-target="#goal-system-failure-modes"><span class="header-section-number">18.39</span> Goal System Failure Modes</a></li>
+  <li><a href="#when-there-are-too-many-goals" id="toc-when-there-are-too-many-goals" class="nav-link" data-scroll-target="#when-there-are-too-many-goals"><span class="header-section-number">18.40</span> When There Are Too Many Goals</a></li>
+  <li><a href="#when-there-is-no-leading-goal" id="toc-when-there-is-no-leading-goal" class="nav-link" data-scroll-target="#when-there-is-no-leading-goal"><span class="header-section-number">18.41</span> When There Is No Leading Goal</a></li>
+  <li><a href="#when-foundation-goals-are-missing" id="toc-when-foundation-goals-are-missing" class="nav-link" data-scroll-target="#when-foundation-goals-are-missing"><span class="header-section-number">18.42</span> When Foundation Goals Are Missing</a></li>
+  <li><a href="#when-goals-lack-evidence" id="toc-when-goals-lack-evidence" class="nav-link" data-scroll-target="#when-goals-lack-evidence"><span class="header-section-number">18.43</span> When Goals Lack Evidence</a></li>
+  <li><a href="#when-goals-are-all-short-term" id="toc-when-goals-are-all-short-term" class="nav-link" data-scroll-target="#when-goals-are-all-short-term"><span class="header-section-number">18.44</span> When Goals Are All Short-Term</a></li>
+  <li><a href="#when-goals-are-all-long-term" id="toc-when-goals-are-all-long-term" class="nav-link" data-scroll-target="#when-goals-are-all-long-term"><span class="header-section-number">18.45</span> When Goals Are All Long-Term</a></li>
+  <li><a href="#when-goals-are-borrowed" id="toc-when-goals-are-borrowed" class="nav-link" data-scroll-target="#when-goals-are-borrowed"><span class="header-section-number">18.46</span> When Goals Are Borrowed</a></li>
+  <li><a href="#when-goals-never-complete" id="toc-when-goals-never-complete" class="nav-link" data-scroll-target="#when-goals-never-complete"><span class="header-section-number">18.47</span> When Goals Never Complete</a></li>
+  <li><a href="#when-goals-change-too-often" id="toc-when-goals-change-too-often" class="nav-link" data-scroll-target="#when-goals-change-too-often"><span class="header-section-number">18.48</span> When Goals Change Too Often</a></li>
+  <li><a href="#goal-system-design-process" id="toc-goal-system-design-process" class="nav-link" data-scroll-target="#goal-system-design-process"><span class="header-section-number">18.49</span> Goal System Design Process</a></li>
+  <li><a href="#step-one-name-the-long-term-direction" id="toc-step-one-name-the-long-term-direction" class="nav-link" data-scroll-target="#step-one-name-the-long-term-direction"><span class="header-section-number">18.50</span> Step One: Name the Long-Term Direction</a></li>
+  <li><a href="#step-two-list-current-goals" id="toc-step-two-list-current-goals" class="nav-link" data-scroll-target="#step-two-list-current-goals"><span class="header-section-number">18.51</span> Step Two: List Current Goals</a></li>
+  <li><a href="#step-three-assign-life-domains" id="toc-step-three-assign-life-domains" class="nav-link" data-scroll-target="#step-three-assign-life-domains"><span class="header-section-number">18.52</span> Step Three: Assign Life Domains</a></li>
+  <li><a href="#step-four-assign-time-horizons" id="toc-step-four-assign-time-horizons" class="nav-link" data-scroll-target="#step-four-assign-time-horizons"><span class="header-section-number">18.53</span> Step Four: Assign Time Horizons</a></li>
+  <li><a href="#step-five-classify-goal-role" id="toc-step-five-classify-goal-role" class="nav-link" data-scroll-target="#step-five-classify-goal-role"><span class="header-section-number">18.54</span> Step Five: Classify Goal Role</a></li>
+  <li><a href="#step-six-choose-the-leading-goal" id="toc-step-six-choose-the-leading-goal" class="nav-link" data-scroll-target="#step-six-choose-the-leading-goal"><span class="header-section-number">18.55</span> Step Six: Choose the Leading Goal</a></li>
+  <li><a href="#step-seven-protect-foundation-goals" id="toc-step-seven-protect-foundation-goals" class="nav-link" data-scroll-target="#step-seven-protect-foundation-goals"><span class="header-section-number">18.56</span> Step Seven: Protect Foundation Goals</a></li>
+  <li><a href="#step-eight-map-dependencies" id="toc-step-eight-map-dependencies" class="nav-link" data-scroll-target="#step-eight-map-dependencies"><span class="header-section-number">18.57</span> Step Eight: Map Dependencies</a></li>
+  <li><a href="#step-nine-check-goal-load" id="toc-step-nine-check-goal-load" class="nav-link" data-scroll-target="#step-nine-check-goal-load"><span class="header-section-number">18.58</span> Step Nine: Check Goal Load</a></li>
+  <li><a href="#step-ten-define-evidence" id="toc-step-ten-define-evidence" class="nav-link" data-scroll-target="#step-ten-define-evidence"><span class="header-section-number">18.59</span> Step Ten: Define Evidence</a></li>
+  <li><a href="#step-eleven-set-review-rhythm" id="toc-step-eleven-set-review-rhythm" class="nav-link" data-scroll-target="#step-eleven-set-review-rhythm"><span class="header-section-number">18.60</span> Step Eleven: Set Review Rhythm</a></li>
+  <li><a href="#step-twelve-write-revision-rules" id="toc-step-twelve-write-revision-rules" class="nav-link" data-scroll-target="#step-twelve-write-revision-rules"><span class="header-section-number">18.61</span> Step Twelve: Write Revision Rules</a></li>
+  <li><a href="#goal-system-template" id="toc-goal-system-template" class="nav-link" data-scroll-target="#goal-system-template"><span class="header-section-number">18.62</span> Goal System Template</a></li>
+  <li><a href="#condensed-goal-system-template" id="toc-condensed-goal-system-template" class="nav-link" data-scroll-target="#condensed-goal-system-template"><span class="header-section-number">18.63</span> Condensed Goal System Template</a></li>
+  <li><a href="#example-goal-system-for-study-transition" id="toc-example-goal-system-for-study-transition" class="nav-link" data-scroll-target="#example-goal-system-for-study-transition"><span class="header-section-number">18.64</span> Example: Goal System for Study Transition</a></li>
+  <li><a href="#example-goal-system-for-written-contribution" id="toc-example-goal-system-for-written-contribution" class="nav-link" data-scroll-target="#example-goal-system-for-written-contribution"><span class="header-section-number">18.65</span> Example: Goal System for Written Contribution</a></li>
+  <li><a href="#example-goal-system-for-structured-freedom" id="toc-example-goal-system-for-structured-freedom" class="nav-link" data-scroll-target="#example-goal-system-for-structured-freedom"><span class="header-section-number">18.66</span> Example: Goal System for Structured Freedom</a></li>
+  <li><a href="#example-goal-system-for-health-sustainability" id="toc-example-goal-system-for-health-sustainability" class="nav-link" data-scroll-target="#example-goal-system-for-health-sustainability"><span class="header-section-number">18.67</span> Example: Goal System for Health Sustainability</a></li>
+  <li><a href="#example-goal-system-for-technical-capability" id="toc-example-goal-system-for-technical-capability" class="nav-link" data-scroll-target="#example-goal-system-for-technical-capability"><span class="header-section-number">18.68</span> Example: Goal System for Technical Capability</a></li>
+  <li><a href="#goal-system-and-identity" id="toc-goal-system-and-identity" class="nav-link" data-scroll-target="#goal-system-and-identity"><span class="header-section-number">18.69</span> Goal System and Identity</a></li>
+  <li><a href="#goal-system-and-self-trust" id="toc-goal-system-and-self-trust" class="nav-link" data-scroll-target="#goal-system-and-self-trust"><span class="header-section-number">18.70</span> Goal System and Self-Trust</a></li>
+  <li><a href="#goal-system-and-freedom" id="toc-goal-system-and-freedom" class="nav-link" data-scroll-target="#goal-system-and-freedom"><span class="header-section-number">18.71</span> Goal System and Freedom</a></li>
+  <li><a href="#goal-system-design" id="toc-goal-system-design" class="nav-link" data-scroll-target="#goal-system-design"><span class="header-section-number">18.72</span> Goal System Design</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./p6.html">Part VI — The Direction System</a></li><li class="breadcrumb-item"><a href="./cp17.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Goal System Design</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Goal System Design</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>A person rarely has only one goal.</p>
+<p>The self may want to study.<br>
+It may want to write.<br>
+It may want to build technical capability.<br>
+It may want money.<br>
+It may want freedom.<br>
+It may want health.<br>
+It may want love.<br>
+It may want family repair.<br>
+It may want recognition.<br>
+It may want contribution.<br>
+It may want a different identity.<br>
+It may want a future that feels larger than the current life.</p>
+<p>Each goal may be meaningful.</p>
+<p>But meaningful goals can still conflict.</p>
+<p>A person may fail not because they lack goals, but because their goals are not organized into a system.</p>
+<p>This chapter begins from a central claim:</p>
+<blockquote class="blockquote">
+<p><strong>Goal system design is the discipline of organizing goals across life domains, time horizons, priorities, dependencies, and capacity, so that goals support a direction instead of competing chaotically.</strong></p>
+</blockquote>
+<p>A goal by itself asks:</p>
+<pre><code>What target should I reach?</code></pre>
+<p>A goal system asks:</p>
+<pre><code>How do all my goals relate to one another?
+
+Which goals lead?
+
+Which goals support?
+
+Which goals protect the foundation?
+
+Which goals conflict?
+
+Which goals should wait?
+
+Which goals should be abandoned?
+
+Which goals belong to today, this week, this season, this year, and the long future?</code></pre>
+<p>A life direction needs not only goals.</p>
+<p>It needs a goal architecture.</p>
+<hr>
+<section id="a-goal-list-is-not-a-goal-system" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="a-goal-list-is-not-a-goal-system"><span class="header-section-number">18.1</span> A Goal List Is Not a Goal System</h2>
+<p>A goal list may look organized.</p>
+<p>It may say:</p>
+<pre><code>Improve English.
+
+Write book.
+
+Build project.
+
+Save money.
+
+Get healthier.
+
+Apply to school.
+
+Learn programming.
+
+Exercise.
+
+Read more.
+
+Build portfolio.
+
+Publish work.
+
+Fix sleep.
+
+Talk to mentor.</code></pre>
+<p>This list contains possible value.</p>
+<p>But it is not yet a system.</p>
+<p>A list does not show:</p>
+<pre><code>which goal leads
+
+which goal supports
+
+which goal depends on another
+
+which goal belongs to which time horizon
+
+which goal is realistic now
+
+which goal creates evidence
+
+which goal protects the foundation
+
+which goal is borrowed
+
+which goal should wait
+
+which goal is overloading the self</code></pre>
+<p>A list can create pressure.</p>
+<p>A system creates order.</p>
+<p>The self should ask:</p>
+<pre><code>Are my goals merely listed?
+
+Or are they organized?
+
+Do I know what leads?
+
+Do I know what waits?
+
+Do I know how goals support one another?
+
+Do I know what must be protected?</code></pre>
+<p>Goal system design begins when the self stops treating goals as independent wishes.</p>
+<hr>
+</section>
+<section id="the-purpose-of-a-goal-system" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="the-purpose-of-a-goal-system"><span class="header-section-number">18.2</span> The Purpose of a Goal System</h2>
+<p>A goal system serves several purposes.</p>
+<pre><code>It aligns goals with direction.
+
+It distributes goals across time horizons.
+
+It organizes goals across life domains.
+
+It identifies conflicts and dependencies.
+
+It controls load.
+
+It protects foundation conditions.
+
+It creates evidence.
+
+It makes review possible.
+
+It prevents scattered effort.
+
+It prevents one goal from destroying the whole life system.</code></pre>
+<p>A good goal system helps the self say:</p>
+<pre><code>This is the main direction.
+
+These are the active goals.
+
+These goals support the main direction.
+
+These goals maintain the foundation.
+
+These goals wait.
+
+These goals are no longer valid.
+
+This is the current bottleneck.
+
+This is the next milestone.
+
+This is what I can actually carry now.</code></pre>
+<p>The system gives the self a governable field.</p>
+<hr>
+</section>
+<section id="goals-across-life-domains" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="goals-across-life-domains"><span class="header-section-number">18.3</span> Goals Across Life Domains</h2>
+<p>Goals belong to life domains.</p>
+<p>A life domain is an area of life that carries value, responsibility, capacity, or consequence.</p>
+<p>Common domains include:</p>
+<pre><code>health
+
+money
+
+study
+
+career
+
+writing
+
+technical capability
+
+family
+
+relationships
+
+identity
+
+environment
+
+contribution
+
+learning
+
+spiritual or moral life
+
+daily rhythm
+
+public work
+
+inner life</code></pre>
+<p>A person may set goals in many domains.</p>
+<p>But not every domain can lead at once.</p>
+<p>The self should ask:</p>
+<pre><code>What domains are currently active?
+
+Which domain leads?
+
+Which domains support?
+
+Which domains maintain foundation?
+
+Which domain is neglected?
+
+Which domain is overloaded?
+
+Which domain creates the current bottleneck?</code></pre>
+<p>For example:</p>
+<pre><code>Study may be the leading domain.
+
+Health and money may be foundation domains.
+
+Writing and technical projects may be supporting domains.
+
+Family may be a relationship domain requiring maintenance.
+
+Public work may be waiting.</code></pre>
+<p>This is more useful than saying:</p>
+<pre><code>I need to do everything.</code></pre>
+<p>A goal system turns life domains into roles.</p>
+<hr>
+</section>
+<section id="leading-goals" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="leading-goals"><span class="header-section-number">18.4</span> Leading Goals</h2>
+<p>A leading goal is the goal that receives primary attention in the current period.</p>
+<p>It answers:</p>
+<pre><code>What must lead now?</code></pre>
+<p>Examples:</p>
+<pre><code>Complete a language diagnostic and practice plan.
+
+Finish Part III of the manuscript.
+
+Build one bounded technical prototype.
+
+Create a six-month runway plan.
+
+Stabilize sleep for two weeks.
+
+Prepare application materials.</code></pre>
+<p>A leading goal should be chosen because it:</p>
+<pre><code>serves the main direction
+
+addresses the bottleneck
+
+creates evidence
+
+unlocks the next milestone
+
+fits the current season
+
+is feasible within capacity
+
+deserves priority</code></pre>
+<p>The self should ask:</p>
+<pre><code>What goal leads now?
+
+Why does it lead?
+
+What does it unlock?
+
+What evidence will it create?
+
+What goal must not compete with it?</code></pre>
+<p>A goal system without a leading goal becomes scattered.</p>
+<hr>
+</section>
+<section id="supporting-goals" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="supporting-goals"><span class="header-section-number">18.5</span> Supporting Goals</h2>
+<p>Supporting goals help the leading goal succeed.</p>
+<p>They do not lead, but they provide necessary conditions.</p>
+<p>For example:</p>
+<pre><code>Leading Goal:
+Prepare for study transition.
+
+Supporting Goals:
+Build program shortlist.
+Prepare CV.
+Complete one project artifact.
+Contact recommender.
+Review finances.</code></pre>
+<pre><code>Leading Goal:
+Complete a manuscript part.
+
+Supporting Goals:
+Organize notes.
+Protect writing time.
+Create revision checklist.
+Ask for feedback.</code></pre>
+<pre><code>Leading Goal:
+Build technical prototype.
+
+Supporting Goals:
+Define scope.
+Read necessary documentation.
+Set up environment.
+Write README.
+Test core function.</code></pre>
+<p>Supporting goals should be limited.</p>
+<p>Too many supporting goals become competing goals.</p>
+<p>The self should ask:</p>
+<pre><code>What goals directly support the leading goal?
+
+Which support is necessary?
+
+Which support is optional?
+
+Which support goal is becoming a distraction?
+
+What support can be simplified?</code></pre>
+<p>Support should strengthen the lead.</p>
+<p>It should not steal the system.</p>
+<hr>
+</section>
+<section id="foundation-goals" class="level2" data-number="18.6">
+<h2 data-number="18.6" class="anchored" data-anchor-id="foundation-goals"><span class="header-section-number">18.6</span> Foundation Goals</h2>
+<p>Foundation goals protect the conditions that allow other goals to be pursued.</p>
+<p>They often involve:</p>
+<pre><code>health
+
+sleep
+
+money
+
+body care
+
+emotional stability
+
+basic order
+
+workspace
+
+daily rhythm
+
+relationship stability
+
+review rhythm</code></pre>
+<p>Foundation goals may not look dramatic.</p>
+<p>But if they collapse, the whole system weakens.</p>
+<p>For example:</p>
+<pre><code>If sleep collapses,
+writing, study, technical work, and emotional judgment all weaken.</code></pre>
+<pre><code>If money becomes chaotic,
+freedom and study become fear-driven.</code></pre>
+<pre><code>If health is ignored,
+ambition loses its carrier.</code></pre>
+<pre><code>If basic order disappears,
+the self loses trust in execution.</code></pre>
+<p>The self should ask:</p>
+<pre><code>What foundation goals must remain active?
+
+What minimums protect the system?
+
+What foundation is currently neglected?
+
+What visible goal depends on this hidden foundation?</code></pre>
+<p>A goal system is not mature if it only contains achievement goals.</p>
+<p>It must contain foundation goals.</p>
+<hr>
+</section>
+<section id="maintenance-goals" class="level2" data-number="18.7">
+<h2 data-number="18.7" class="anchored" data-anchor-id="maintenance-goals"><span class="header-section-number">18.7</span> Maintenance Goals</h2>
+<p>Maintenance goals preserve what already matters.</p>
+<p>They do not always create expansion.</p>
+<p>They prevent decay.</p>
+<p>Examples:</p>
+<pre><code>maintain sleep rhythm
+
+review money weekly
+
+keep body movement active
+
+maintain family communication
+
+keep workspace usable
+
+review project status
+
+keep basic study rhythm
+
+preserve writing continuity
+
+maintain emotional order</code></pre>
+<p>A person who only builds and never maintains creates hidden breakdown.</p>
+<p>The self should ask:</p>
+<pre><code>What must be maintained?
+
+What will decay if ignored?
+
+What minimum rhythm is enough?
+
+What maintenance goal should not become a major project?
+
+What maintenance protects the leading goal?</code></pre>
+<p>Maintenance goals should usually be small, repeatable, and realistic.</p>
+<p>They protect continuity.</p>
+<hr>
+</section>
+<section id="growth-goals" class="level2" data-number="18.8">
+<h2 data-number="18.8" class="anchored" data-anchor-id="growth-goals"><span class="header-section-number">18.8</span> Growth Goals</h2>
+<p>Growth goals build new capability, identity, or future options.</p>
+<p>Examples:</p>
+<pre><code>improve language ability
+
+learn a technical framework
+
+complete a portfolio project
+
+build writing craft
+
+develop public communication
+
+increase physical capacity
+
+practice emotional regulation
+
+build professional positioning</code></pre>
+<p>Growth goals often require repetition and feedback.</p>
+<p>The self should ask:</p>
+<pre><code>What capability should grow?
+
+Why does this capability matter?
+
+What evidence proves growth?
+
+What practice builds it?
+
+What feedback will correct it?
+
+What time horizon does it require?</code></pre>
+<p>Growth goals should connect to direction.</p>
+<p>Otherwise growth becomes endless self-improvement without purpose.</p>
+<hr>
+</section>
+<section id="output-goals" class="level2" data-number="18.9">
+<h2 data-number="18.9" class="anchored" data-anchor-id="output-goals"><span class="header-section-number">18.9</span> Output Goals</h2>
+<p>Output goals create artifacts.</p>
+<p>Examples:</p>
+<pre><code>chapter draft
+
+revised essay
+
+technical prototype
+
+program table
+
+application statement
+
+portfolio item
+
+financial plan
+
+health log
+
+public article
+
+system map
+
+project README</code></pre>
+<p>Output goals are powerful because they create evidence.</p>
+<p>The self should ask:</p>
+<pre><code>What artifact should exist?
+
+What standard defines completion?
+
+What milestone does it support?
+
+Who can inspect or use it?
+
+What next step does it unlock?</code></pre>
+<p>A goal system should include output goals because output prevents abstract intention from remaining invisible.</p>
+<hr>
+</section>
+<section id="decision-goals" class="level2" data-number="18.10">
+<h2 data-number="18.10" class="anchored" data-anchor-id="decision-goals"><span class="header-section-number">18.10</span> Decision Goals</h2>
+<p>Decision goals help the self choose.</p>
+<p>They are needed when ambiguity blocks action.</p>
+<p>Examples:</p>
+<pre><code>choose target programs
+
+decide application timeline
+
+select project scope
+
+choose whether to delay or commit
+
+decide current lead priority
+
+choose between two paths
+
+define risk boundary
+
+choose what to abandon</code></pre>
+<p>A decision goal should include criteria.</p>
+<p>The self should ask:</p>
+<pre><code>What decision must be made?
+
+What information is needed?
+
+What criteria will decide?
+
+What deadline prevents endless postponement?
+
+What will happen after the decision?</code></pre>
+<p>Decision goals prevent indefinite openness.</p>
+<p>Without decision goals, the self may keep every option alive and move none of them forward.</p>
+<hr>
+</section>
+<section id="repair-goals" class="level2" data-number="18.11">
+<h2 data-number="18.11" class="anchored" data-anchor-id="repair-goals"><span class="header-section-number">18.11</span> Repair Goals</h2>
+<p>Repair goals restore damaged foundations.</p>
+<p>Examples:</p>
+<pre><code>repair sleep
+
+repair health rhythm
+
+repair financial order
+
+repair unfinished work
+
+repair self-trust
+
+repair relationship communication
+
+repair workspace
+
+repair broken project structure
+
+repair emotional stability</code></pre>
+<p>Repair goals are not lesser goals.</p>
+<p>They often become the true priority when the foundation is damaged.</p>
+<p>The self should ask:</p>
+<pre><code>What is damaged?
+
+What must be restored before expansion?
+
+What evidence shows repair?
+
+What caused the damage?
+
+What prevents the same damage from repeating?</code></pre>
+<p>A system that refuses repair eventually becomes brittle.</p>
+<hr>
+</section>
+<section id="boundary-goals" class="level2" data-number="18.12">
+<h2 data-number="18.12" class="anchored" data-anchor-id="boundary-goals"><span class="header-section-number">18.12</span> Boundary Goals</h2>
+<p>Boundary goals stop leakage.</p>
+<p>They define what will not be allowed.</p>
+<p>Examples:</p>
+<pre><code>do not start a new project before finishing the current one
+
+do not work past a sleep boundary
+
+do not spend beyond a monthly limit
+
+do not keep researching after shortlist is complete
+
+do not expand prototype before core function works
+
+do not accept obligations that destroy the leading priority
+
+do not let comparison decide the goal</code></pre>
+<p>Boundary goals are essential because progress is not only created by doing more.</p>
+<p>Progress is also created by stopping what weakens the system.</p>
+<p>The self should ask:</p>
+<pre><code>What leakage weakens my direction?
+
+What must be refused?
+
+What boundary protects the leading goal?
+
+What boundary protects health?
+
+What boundary protects freedom?
+
+What boundary protects attention?</code></pre>
+<p>A goal system without boundaries becomes vulnerable to every attractive distraction.</p>
+<hr>
+</section>
+<section id="waiting-goals" class="level2" data-number="18.13">
+<h2 data-number="18.13" class="anchored" data-anchor-id="waiting-goals"><span class="header-section-number">18.13</span> Waiting Goals</h2>
+<p>Some goals matter but should not be active now.</p>
+<p>These are waiting goals.</p>
+<p>They are not abandoned.</p>
+<p>They are postponed with conditions.</p>
+<p>Examples:</p>
+<pre><code>public expansion after a shareable artifact exists
+
+new book project after current volume reaches milestone
+
+large platform after prototype works
+
+career outreach after portfolio evidence is ready
+
+major transition after runway threshold
+
+advanced training after health baseline stabilizes</code></pre>
+<p>Waiting goals should be written down so they do not keep consuming attention.</p>
+<p>The self should ask:</p>
+<pre><code>What goal matters but should wait?
+
+What condition will activate it?
+
+What evidence must exist first?
+
+What danger appears if I activate it too early?
+
+What can I do now to prepare without overloading the system?</code></pre>
+<p>Waiting protects order.</p>
+<p>It lets the self say:</p>
+<pre><code>Not now does not mean never.</code></pre>
+<hr>
+</section>
+<section id="abandoned-goals" class="level2" data-number="18.14">
+<h2 data-number="18.14" class="anchored" data-anchor-id="abandoned-goals"><span class="header-section-number">18.14</span> Abandoned Goals</h2>
+<p>Some goals should be removed from the system.</p>
+<p>They may be:</p>
+<pre><code>borrowed
+
+status-driven
+
+shame-driven
+
+dead
+
+misaligned
+
+too costly
+
+unowned
+
+based on old identity
+
+kept only because of sunk cost
+
+kept only because of fear of judgment</code></pre>
+<p>Abandoned goals should be named clearly.</p>
+<p>Otherwise they remain as emotional noise.</p>
+<p>The self should ask:</p>
+<pre><code>What goal should no longer be active?
+
+Why should it be abandoned?
+
+What value was it trying to serve?
+
+Can that value be served by another goal?
+
+What asset or learning should be preserved?
+
+What attention becomes free after abandonment?</code></pre>
+<p>A clean abandonment strengthens the system.</p>
+<p>A hidden abandoned goal becomes unfinished psychic debt.</p>
+<hr>
+</section>
+<section id="goal-hierarchy" class="level2" data-number="18.15">
+<h2 data-number="18.15" class="anchored" data-anchor-id="goal-hierarchy"><span class="header-section-number">18.15</span> Goal Hierarchy</h2>
+<p>A goal system needs hierarchy.</p>
+<p>Not all goals sit at the same level.</p>
+<p>A simple hierarchy may be:</p>
+<pre><code>Lifetime Values
+
+Long-Term Directions
+
+Yearly Outcomes
+
+Seasonal Milestones
+
+Monthly Goals
+
+Weekly Targets
+
+Daily Actions</code></pre>
+<p>Each level should serve the level above it.</p>
+<p>For example:</p>
+<pre><code>Lifetime Value:
+Learning and contribution.
+
+Long-Term Direction:
+Build technical and written capability.
+
+Yearly Outcome:
+Complete a portfolio project and a major written volume.
+
+Seasonal Milestone:
+Finish one prototype and one manuscript part.
+
+Monthly Goal:
+Complete prototype core function and draft chapters.
+
+Weekly Target:
+Build one component and finish one chapter.
+
+Daily Action:
+Code, write, revise, test.</code></pre>
+<p>The self should ask:</p>
+<pre><code>What higher-level direction does this goal serve?
+
+What lower-level action expresses it?
+
+Is there a break between levels?
+
+Are daily actions actually connected to long-term direction?</code></pre>
+<p>Hierarchy prevents daily action from becoming detached.</p>
+<hr>
+</section>
+<section id="goal-portfolio" class="level2" data-number="18.16">
+<h2 data-number="18.16" class="anchored" data-anchor-id="goal-portfolio"><span class="header-section-number">18.16</span> Goal Portfolio</h2>
+<p>A person’s active goals form a portfolio.</p>
+<p>A portfolio should not contain only one type of goal.</p>
+<p>A strong goal portfolio may include:</p>
+<pre><code>one leading goal
+
+a few supporting goals
+
+foundation goals
+
+maintenance goals
+
+one or two growth goals
+
+output goals
+
+decision goals if needed
+
+repair goals if foundation is weak
+
+boundary goals to protect attention</code></pre>
+<p>The portfolio should be small enough to carry.</p>
+<p>The self should ask:</p>
+<pre><code>What is in my active goal portfolio?
+
+Is it too crowded?
+
+Is it missing foundation goals?
+
+Is it missing output goals?
+
+Is it missing repair?
+
+Is it missing boundaries?
+
+What should be removed?</code></pre>
+<p>A goal portfolio is not a wish portfolio.</p>
+<p>It is a capacity-aware set of active commitments.</p>
+<hr>
+</section>
+<section id="goal-load" class="level2" data-number="18.17">
+<h2 data-number="18.17" class="anchored" data-anchor-id="goal-load"><span class="header-section-number">18.17</span> Goal Load</h2>
+<p>Goal load means the total demand created by active goals.</p>
+<p>A system can fail because the goal load exceeds capacity.</p>
+<p>Goal load includes:</p>
+<pre><code>time demand
+
+energy demand
+
+attention demand
+
+emotional demand
+
+money demand
+
+health demand
+
+coordination demand
+
+decision demand
+
+context-switching demand</code></pre>
+<p>The self may believe it has five reasonable goals.</p>
+<p>But together they may be too heavy.</p>
+<p>The self should ask:</p>
+<pre><code>How much load does each goal create?
+
+Can I carry all active goals together?
+
+Which goal creates hidden emotional load?
+
+Which goal creates context-switching cost?
+
+Which goal must be simplified?
+
+Which goal must wait?</code></pre>
+<p>Goal system design requires capacity realism.</p>
+<p>A good goal can become bad if the system is overloaded.</p>
+<hr>
+</section>
+<section id="goal-capacity" class="level2" data-number="18.18">
+<h2 data-number="18.18" class="anchored" data-anchor-id="goal-capacity"><span class="header-section-number">18.18</span> Goal Capacity</h2>
+<p>Capacity is what the self can realistically carry.</p>
+<p>Capacity depends on:</p>
+<pre><code>health
+
+sleep
+
+money
+
+time
+
+energy
+
+skill
+
+support
+
+environment
+
+stress level
+
+life season
+
+emotional stability
+
+current responsibilities</code></pre>
+<p>The self should ask:</p>
+<pre><code>What is my current capacity?
+
+Is this a high-capacity season or low-capacity season?
+
+What goal load fits this season?
+
+What capacity must be rebuilt?
+
+What goal would exceed the system?</code></pre>
+<p>A mature goal system does not design goals for an imaginary self.</p>
+<p>It designs goals for the actual self while building capacity over time.</p>
+<hr>
+</section>
+<section id="goal-conflict" class="level2" data-number="18.19">
+<h2 data-number="18.19" class="anchored" data-anchor-id="goal-conflict"><span class="header-section-number">18.19</span> Goal Conflict</h2>
+<p>Goals can conflict.</p>
+<p>For example:</p>
+<pre><code>Write more
+conflicts with
+sleep more
+if time is limited.</code></pre>
+<pre><code>Save money
+conflicts with
+pay for training
+if resources are limited.</code></pre>
+<pre><code>Apply broadly
+conflicts with
+prepare deeply
+if attention is limited.</code></pre>
+<pre><code>Build public visibility
+conflicts with
+revise private work
+if quality is not ready.</code></pre>
+<p>The self should ask:</p>
+<pre><code>Which goals conflict?
+
+What resource do they compete for?
+
+What value is behind each goal?
+
+Which goal leads now?
+
+Can they be sequenced?
+
+Can one become a minimum while the other leads?
+
+Should one be postponed?</code></pre>
+<p>Goal conflict should be made explicit.</p>
+<p>Unmapped conflict becomes guilt.</p>
+<p>Mapped conflict becomes strategy.</p>
+<hr>
+</section>
+<section id="goal-dependency" class="level2" data-number="18.20">
+<h2 data-number="18.20" class="anchored" data-anchor-id="goal-dependency"><span class="header-section-number">18.20</span> Goal Dependency</h2>
+<p>Some goals depend on other goals.</p>
+<p>For example:</p>
+<pre><code>Application submission depends on program research and documents.
+
+Revision depends on draft completion.
+
+Public feedback depends on shareable artifact.
+
+Portfolio depends on project completion.
+
+Freedom decision depends on runway calculation.
+
+Health expansion depends on baseline stability.</code></pre>
+<p>The self should ask:</p>
+<pre><code>What does this goal depend on?
+
+What prerequisite is missing?
+
+What dependency should be built first?
+
+What goal is blocked until another goal completes?
+
+What can run in parallel?</code></pre>
+<p>A goal system should show dependencies clearly.</p>
+<p>This prevents the self from blaming itself for not completing a goal whose prerequisites were missing.</p>
+<hr>
+</section>
+<section id="goal-sequencing" class="level2" data-number="18.21">
+<h2 data-number="18.21" class="anchored" data-anchor-id="goal-sequencing"><span class="header-section-number">18.21</span> Goal Sequencing</h2>
+<p>Goal sequencing arranges goals in order.</p>
+<p>A sequence may look like:</p>
+<pre><code>baseline
+→ preparation
+→ first evidence
+→ construction
+→ feedback
+→ revision
+→ expansion</code></pre>
+<p>For study:</p>
+<pre><code>diagnostic
+→ program requirements
+→ gap analysis
+→ practice plan
+→ project evidence
+→ application documents
+→ submission</code></pre>
+<p>For writing:</p>
+<pre><code>outline
+→ draft
+→ complete
+→ revise
+→ feedback
+→ share</code></pre>
+<p>For technical work:</p>
+<pre><code>scope
+→ prototype
+→ test
+→ document
+→ portfolio
+→ review</code></pre>
+<p>The self should ask:</p>
+<pre><code>What is the correct sequence?
+
+What is premature?
+
+What is overdue?
+
+What sequence reduces risk?
+
+What sequence creates evidence fastest?</code></pre>
+<p>Sequence turns a goal portfolio into a path.</p>
+<hr>
+</section>
+<section id="goals-across-time-horizons" class="level2" data-number="18.22">
+<h2 data-number="18.22" class="anchored" data-anchor-id="goals-across-time-horizons"><span class="header-section-number">18.22</span> Goals Across Time Horizons</h2>
+<p>Goals should be placed in time horizons.</p>
+<p>A goal system may organize them as:</p>
+<pre><code>Daily Actions:
+What happens today?
+
+Weekly Targets:
+What should be completed this week?
+
+Monthly Goals:
+What project or capability should move this month?
+
+Seasonal Milestones:
+What stage should be reached this season?
+
+Yearly Outcomes:
+What major evidence should exist this year?
+
+Long-Term Directions:
+What future is being built over years?
+
+Lifetime Values:
+What must remain true across changing goals?</code></pre>
+<p>The self should ask:</p>
+<pre><code>Does each horizon have the right kind of goal?
+
+Is today too heavy?
+
+Is the season too vague?
+
+Is the year too scattered?
+
+Is the long-term direction connected to daily evidence?</code></pre>
+<p>Time horizon design prevents two failures:</p>
+<pre><code>short-term busyness without long-term meaning
+
+long-term dreaming without short-term evidence</code></pre>
+<hr>
+</section>
+<section id="daily-goals" class="level2" data-number="18.23">
+<h2 data-number="18.23" class="anchored" data-anchor-id="daily-goals"><span class="header-section-number">18.23</span> Daily Goals</h2>
+<p>Daily goals should be small enough to complete.</p>
+<p>They should serve weekly targets.</p>
+<p>Examples:</p>
+<pre><code>write one section
+
+complete one practice set
+
+fix one bug
+
+review one program
+
+track expenses
+
+walk thirty minutes
+
+revise one page
+
+send one email
+
+record body signals</code></pre>
+<p>The self should ask:</p>
+<pre><code>What action matters today?
+
+What weekly target does it serve?
+
+What is the minimum effective action?
+
+What must not crowd it out?</code></pre>
+<p>Daily goals should not carry the whole future.</p>
+<p>They should create continuity.</p>
+<hr>
+</section>
+<section id="weekly-goals" class="level2" data-number="18.24">
+<h2 data-number="18.24" class="anchored" data-anchor-id="weekly-goals"><span class="header-section-number">18.24</span> Weekly Goals</h2>
+<p>Weekly goals should create visible movement.</p>
+<p>Examples:</p>
+<pre><code>draft one chapter
+
+complete one diagnostic
+
+finish one project component
+
+review expenses
+
+complete program research batch
+
+protect sleep rhythm for five days
+
+revise one section
+
+prepare one application document</code></pre>
+<p>The self should ask:</p>
+<pre><code>What evidence should exist this week?
+
+What leading goal receives protected time?
+
+What support goals are necessary?
+
+What maintenance goals must continue?
+
+What should be excluded this week?</code></pre>
+<p>A week should have a center.</p>
+<p>Without a center, attention fragments.</p>
+<hr>
+</section>
+<section id="monthly-goals" class="level2" data-number="18.25">
+<h2 data-number="18.25" class="anchored" data-anchor-id="monthly-goals"><span class="header-section-number">18.25</span> Monthly Goals</h2>
+<p>Monthly goals should move projects, capability, or repair.</p>
+<p>Examples:</p>
+<pre><code>finish one manuscript part
+
+complete one technical prototype
+
+build a program shortlist
+
+establish expense baseline
+
+complete a practice cycle
+
+stabilize health rhythm
+
+prepare application package draft
+
+repair an unfinished project</code></pre>
+<p>The self should ask:</p>
+<pre><code>What should be meaningfully different by the end of this month?
+
+What project should move?
+
+What capability should improve?
+
+What foundation should be repaired?
+
+What evidence should exist?</code></pre>
+<p>A month is long enough for construction, but short enough for concrete review.</p>
+<hr>
+</section>
+<section id="seasonal-goals" class="level2" data-number="18.26">
+<h2 data-number="18.26" class="anchored" data-anchor-id="seasonal-goals"><span class="header-section-number">18.26</span> Seasonal Goals</h2>
+<p>Seasonal goals should usually be milestones.</p>
+<p>Examples:</p>
+<pre><code>application readiness
+
+volume draft complete
+
+portfolio artifact complete
+
+three-month runway reached
+
+health rhythm stabilized
+
+career direction clarified
+
+public artifact released</code></pre>
+<p>The self should ask:</p>
+<pre><code>What is this season for?
+
+What milestone should define it?
+
+What should not be attempted this season?
+
+What will count as real progress?
+
+What review happens at the end?</code></pre>
+<p>A season should not contain too many leading milestones.</p>
+<p>One or two serious milestones are often enough.</p>
+<hr>
+</section>
+<section id="yearly-goals" class="level2" data-number="18.27">
+<h2 data-number="18.27" class="anchored" data-anchor-id="yearly-goals"><span class="header-section-number">18.27</span> Yearly Goals</h2>
+<p>Yearly goals should create major evidence.</p>
+<p>Examples:</p>
+<pre><code>submit graduate applications
+
+complete one volume
+
+build a portfolio of projects
+
+create financial transition readiness
+
+stabilize health foundation
+
+change field or prepare credible transition
+
+establish public body of work</code></pre>
+<p>The self should ask:</p>
+<pre><code>What major proof should exist this year?
+
+What direction does the year serve?
+
+What seasonal milestones build toward it?
+
+What must be protected across the year?
+
+What would make this year successful even if the exact path changes?</code></pre>
+<p>Yearly goals should be ambitious but not overloaded.</p>
+<p>A year is a major container for direction.</p>
+<hr>
+</section>
+<section id="long-term-direction" class="level2" data-number="18.28">
+<h2 data-number="18.28" class="anchored" data-anchor-id="long-term-direction"><span class="header-section-number">18.28</span> Long-Term Direction</h2>
+<p>Long-term direction should not be too specific too early.</p>
+<p>It should guide without pretending to know every future detail.</p>
+<p>Examples:</p>
+<pre><code>build serious written contribution
+
+develop technical capability and agency
+
+build structured freedom
+
+build sustainable health
+
+create meaningful work
+
+develop adult identity and responsibility
+
+live by owned values</code></pre>
+<p>The self should ask:</p>
+<pre><code>What long direction organizes my goals?
+
+What capabilities should compound?
+
+What assets should accumulate?
+
+What identity should become more real?
+
+What values should remain active across years?</code></pre>
+<p>Long-term direction gives coherence to shorter goals.</p>
+<hr>
+</section>
+<section id="cross-domain-alignment" class="level2" data-number="18.29">
+<h2 data-number="18.29" class="anchored" data-anchor-id="cross-domain-alignment"><span class="header-section-number">18.29</span> Cross-Domain Alignment</h2>
+<p>A goal system should align domains.</p>
+<p>For example:</p>
+<pre><code>Study transition may align with technical capability.
+
+Technical projects may support application and career direction.
+
+Writing may support identity, contribution, and application narrative.
+
+Financial runway may support freedom and study.
+
+Health may support every other domain.</code></pre>
+<p>The self should ask:</p>
+<pre><code>Which goals support multiple domains?
+
+Which goal creates reusable evidence?
+
+Which goal creates leverage across the system?
+
+Which domain is isolated?
+
+Which goal creates conflict across domains?</code></pre>
+<p>A strong goal system seeks alignment.</p>
+<p>One good goal can serve several directions.</p>
+<hr>
+</section>
+<section id="reusable-goal-evidence" class="level2" data-number="18.30">
+<h2 data-number="18.30" class="anchored" data-anchor-id="reusable-goal-evidence"><span class="header-section-number">18.30</span> Reusable Goal Evidence</h2>
+<p>Some goals create evidence that remains useful across paths.</p>
+<p>Examples:</p>
+<pre><code>language score
+
+portfolio project
+
+writing sample
+
+technical documentation
+
+financial runway
+
+health rhythm
+
+application materials
+
+public artifact
+
+recommendation relationship
+
+decision criteria</code></pre>
+<p>The self should ask:</p>
+<pre><code>What evidence will remain valuable if the path changes?
+
+What goal creates reusable assets?
+
+What evidence supports several future options?
+
+What goal is too narrow and fragile?</code></pre>
+<p>Reusable evidence makes the system resilient.</p>
+<p>If one path fails, the asset still remains.</p>
+<hr>
+</section>
+<section id="goal-bottleneck" class="level2" data-number="18.31">
+<h2 data-number="18.31" class="anchored" data-anchor-id="goal-bottleneck"><span class="header-section-number">18.31</span> Goal Bottleneck</h2>
+<p>A goal bottleneck is the goal that unlocks the system.</p>
+<p>For example:</p>
+<pre><code>Language score may unlock application.
+
+Draft completion may unlock revision.
+
+Prototype completion may unlock portfolio.
+
+Runway calculation may unlock freedom decision.
+
+Health stabilization may unlock work capacity.
+
+Program shortlist may unlock application narrative.</code></pre>
+<p>The self should ask:</p>
+<pre><code>Which goal unlocks the next stage?
+
+Which goal blocks several other goals?
+
+Which goal am I avoiding?
+
+What happens if I complete this bottleneck goal?</code></pre>
+<p>The bottleneck goal often deserves priority.</p>
+<p>A goal system should not treat all goals equally.</p>
+<hr>
+</section>
+<section id="goal-redundancy" class="level2" data-number="18.32">
+<h2 data-number="18.32" class="anchored" data-anchor-id="goal-redundancy"><span class="header-section-number">18.32</span> Goal Redundancy</h2>
+<p>Some goals duplicate each other.</p>
+<p>They consume attention without adding new evidence.</p>
+<p>Examples:</p>
+<pre><code>researching the same information repeatedly
+
+creating multiple outlines without drafting
+
+learning several tools before building one project
+
+tracking too many metrics without changing behavior
+
+planning several future routes without choosing one test</code></pre>
+<p>The self should ask:</p>
+<pre><code>Which goals produce the same kind of evidence?
+
+Which goals can be merged?
+
+Which goals are repeated because I avoid the next stage?
+
+What single goal would replace several weak goals?</code></pre>
+<p>A good goal system reduces redundancy.</p>
+<p>It favors evidence over repetition.</p>
+<hr>
+</section>
+<section id="goal-overlap" class="level2" data-number="18.33">
+<h2 data-number="18.33" class="anchored" data-anchor-id="goal-overlap"><span class="header-section-number">18.33</span> Goal Overlap</h2>
+<p>Some goal overlap is useful.</p>
+<p>For example:</p>
+<pre><code>A technical project can support portfolio, application, career transition, and self-trust.</code></pre>
+<pre><code>A written essay can support contribution, communication skill, identity, and public evidence.</code></pre>
+<pre><code>A health routine can support work, study, mood, and future capacity.</code></pre>
+<p>The self should ask:</p>
+<pre><code>Where is overlap useful?
+
+Where does one goal serve multiple directions?
+
+Where does overlap become confusion?
+
+How can I design goals that compound?</code></pre>
+<p>Good overlap creates leverage.</p>
+<p>Bad overlap creates ambiguity.</p>
+<hr>
+</section>
+<section id="goal-rhythm" class="level2" data-number="18.34">
+<h2 data-number="18.34" class="anchored" data-anchor-id="goal-rhythm"><span class="header-section-number">18.34</span> Goal Rhythm</h2>
+<p>A goal system needs rhythm.</p>
+<p>Not all goals require the same frequency.</p>
+<p>Some goals are daily.</p>
+<p>Some weekly.</p>
+<p>Some monthly.</p>
+<p>Some seasonal.</p>
+<p>Some only need review.</p>
+<p>Examples:</p>
+<pre><code>Daily:
+writing, language practice, health check.
+
+Weekly:
+money review, chapter progress, project review.
+
+Monthly:
+milestone progress, portfolio development, strategy review.
+
+Seasonal:
+major direction and priority review.
+
+Yearly:
+life direction and evidence review.</code></pre>
+<p>The self should ask:</p>
+<pre><code>What rhythm does each goal need?
+
+What should be daily?
+
+What should be weekly?
+
+What should be monthly?
+
+What should not be checked too often?
+
+What review rhythm prevents drift?</code></pre>
+<p>Rhythm turns goals into practice.</p>
+<hr>
+</section>
+<section id="goal-review-system" class="level2" data-number="18.35">
+<h2 data-number="18.35" class="anchored" data-anchor-id="goal-review-system"><span class="header-section-number">18.35</span> Goal Review System</h2>
+<p>A goal system must include review.</p>
+<p>Without review, goals become stale.</p>
+<p>A review system can ask:</p>
+<pre><code>Active Goals:
+What goals are currently active?
+
+Evidence:
+What was created?
+
+Progress:
+What moved?
+
+Blockage:
+What stalled?
+
+Load:
+Is the system overloaded?
+
+Alignment:
+Do goals still serve direction?
+
+Priority:
+What leads now?
+
+Foundation:
+What is weakening?
+
+Waiting:
+What should remain inactive?
+
+Abandonment:
+What should be released?
+
+Revision:
+What should change?</code></pre>
+<p>Review keeps the system alive.</p>
+<p>A goal system should be updated by evidence, not mood alone.</p>
+<hr>
+</section>
+<section id="weekly-goal-review" class="level2" data-number="18.36">
+<h2 data-number="18.36" class="anchored" data-anchor-id="weekly-goal-review"><span class="header-section-number">18.36</span> Weekly Goal Review</h2>
+<p>A weekly review may ask:</p>
+<pre><code>What was the leading goal this week?
+
+What evidence was created?
+
+What goal stalled?
+
+What interrupted progress?
+
+Was the load realistic?
+
+What foundation condition weakened?
+
+What should lead next week?
+
+What should be removed from next week?</code></pre>
+<p>The weekly review should be practical.</p>
+<p>It should not become a full life audit every time.</p>
+<p>Its purpose is to adjust execution.</p>
+<hr>
+</section>
+<section id="monthly-goal-review" class="level2" data-number="18.37">
+<h2 data-number="18.37" class="anchored" data-anchor-id="monthly-goal-review"><span class="header-section-number">18.37</span> Monthly Goal Review</h2>
+<p>A monthly review may ask:</p>
+<pre><code>What monthly goal moved?
+
+What project or capability progressed?
+
+What milestone became closer?
+
+What repeated blockage appeared?
+
+What goal should be resized?
+
+What goal should be delayed?
+
+What goal should be abandoned?
+
+What does next month need to build?</code></pre>
+<p>The monthly review connects weekly action to seasonal milestone.</p>
+<p>It prevents months from disappearing.</p>
+<hr>
+</section>
+<section id="seasonal-goal-review" class="level2" data-number="18.38">
+<h2 data-number="18.38" class="anchored" data-anchor-id="seasonal-goal-review"><span class="header-section-number">18.38</span> Seasonal Goal Review</h2>
+<p>A seasonal review may ask:</p>
+<pre><code>What was this season for?
+
+Was the milestone reached?
+
+What evidence now exists?
+
+What direction became clearer?
+
+What priority should change?
+
+What foundation needs repair?
+
+What goal should lead next season?
+
+What should wait?
+
+What should end?</code></pre>
+<p>Seasonal review is strategic.</p>
+<p>It updates the goal system at a higher level.</p>
+<hr>
+</section>
+<section id="goal-system-failure-modes" class="level2" data-number="18.39">
+<h2 data-number="18.39" class="anchored" data-anchor-id="goal-system-failure-modes"><span class="header-section-number">18.39</span> Goal System Failure Modes</h2>
+<p>A goal system may fail in several ways.</p>
+<pre><code>too many active goals
+
+no leading goal
+
+no foundation goals
+
+no evidence goals
+
+goals without time horizon
+
+goals without review
+
+goals disconnected from values
+
+goals competing for the same resource
+
+goals that are all maintenance and no growth
+
+goals that are all ambition and no maintenance
+
+goals that are borrowed
+
+goals that never complete
+
+goals that never revise
+
+goals that change too often</code></pre>
+<p>The self should ask:</p>
+<pre><code>Which failure mode is present?
+
+What should be simplified?
+
+What should be added?
+
+What should be removed?
+
+What should lead now?</code></pre>
+<p>Goal system design includes failure detection.</p>
+<hr>
+</section>
+<section id="when-there-are-too-many-goals" class="level2" data-number="18.40">
+<h2 data-number="18.40" class="anchored" data-anchor-id="when-there-are-too-many-goals"><span class="header-section-number">18.40</span> When There Are Too Many Goals</h2>
+<p>Too many goals create overload.</p>
+<p>The self may feel responsible for everything.</p>
+<p>It may begin many things and complete none.</p>
+<p>The response is triage.</p>
+<p>The self should classify goals into:</p>
+<pre><code>active
+
+supporting
+
+maintenance
+
+waiting
+
+abandoned</code></pre>
+<p>Then ask:</p>
+<pre><code>What is the one leading goal?
+
+What two or three goals truly support it?
+
+What foundation minimums must remain?
+
+What goals can wait?
+
+What goals must be released?</code></pre>
+<p>The solution to too many goals is not stronger willpower.</p>
+<p>It is better architecture.</p>
+<hr>
+</section>
+<section id="when-there-is-no-leading-goal" class="level2" data-number="18.41">
+<h2 data-number="18.41" class="anchored" data-anchor-id="when-there-is-no-leading-goal"><span class="header-section-number">18.41</span> When There Is No Leading Goal</h2>
+<p>If no goal leads, the self may drift.</p>
+<p>Everything feels equally important.</p>
+<p>The self should ask:</p>
+<pre><code>What is the current bottleneck?
+
+What goal creates the most evidence?
+
+What goal unlocks the next milestone?
+
+What goal protects the foundation?
+
+What goal would make this month meaningful?</code></pre>
+<p>A leading goal may be small.</p>
+<p>But it must be clear.</p>
+<p>Without a lead, the goal system has no spine.</p>
+<hr>
+</section>
+<section id="when-foundation-goals-are-missing" class="level2" data-number="18.42">
+<h2 data-number="18.42" class="anchored" data-anchor-id="when-foundation-goals-are-missing"><span class="header-section-number">18.42</span> When Foundation Goals Are Missing</h2>
+<p>If foundation goals are missing, the self may achieve briefly and collapse later.</p>
+<p>Signs include:</p>
+<pre><code>sleep decline
+
+body pain
+
+money anxiety
+
+emotional instability
+
+workspace chaos
+
+relationship strain
+
+review failure
+
+constant exhaustion</code></pre>
+<p>The self should ask:</p>
+<pre><code>What foundation is being sacrificed?
+
+What minimum must be restored?
+
+What ambitious goal should slow down until foundation recovers?
+
+What foundation goal should become active now?</code></pre>
+<p>Foundation goals are not optional.</p>
+<p>They keep the direction alive.</p>
+<hr>
+</section>
+<section id="when-goals-lack-evidence" class="level2" data-number="18.43">
+<h2 data-number="18.43" class="anchored" data-anchor-id="when-goals-lack-evidence"><span class="header-section-number">18.43</span> When Goals Lack Evidence</h2>
+<p>A goal system may sound impressive but create little proof.</p>
+<p>Examples:</p>
+<pre><code>think about study
+
+plan writing
+
+explore technical work
+
+improve health
+
+consider freedom
+
+research career</code></pre>
+<p>These should be converted into evidence goals.</p>
+<pre><code>take diagnostic
+
+finish chapter
+
+build prototype
+
+track sleep
+
+calculate runway
+
+complete field comparison</code></pre>
+<p>The self should ask:</p>
+<pre><code>What evidence is missing?
+
+What artifact, score, record, document, prototype, or decision should exist?
+
+What goal will create it?</code></pre>
+<p>Evidence gives the system reality contact.</p>
+<hr>
+</section>
+<section id="when-goals-are-all-short-term" class="level2" data-number="18.44">
+<h2 data-number="18.44" class="anchored" data-anchor-id="when-goals-are-all-short-term"><span class="header-section-number">18.44</span> When Goals Are All Short-Term</h2>
+<p>A system with only short-term goals becomes reactive.</p>
+<p>It may contain:</p>
+<pre><code>answer messages
+
+fix small tasks
+
+handle urgent work
+
+do daily chores
+
+solve immediate problems
+
+avoid discomfort</code></pre>
+<p>These may matter.</p>
+<p>But without medium and long horizons, life becomes fragmented.</p>
+<p>The self should ask:</p>
+<pre><code>What larger milestone do these actions serve?
+
+What seasonal goal is missing?
+
+What long-term direction is not being expressed?
+
+What major evidence should this month or season create?</code></pre>
+<p>Short-term action needs long-term structure.</p>
+<hr>
+</section>
+<section id="when-goals-are-all-long-term" class="level2" data-number="18.45">
+<h2 data-number="18.45" class="anchored" data-anchor-id="when-goals-are-all-long-term"><span class="header-section-number">18.45</span> When Goals Are All Long-Term</h2>
+<p>A system with only long-term goals becomes vague.</p>
+<p>It may contain:</p>
+<pre><code>become successful
+
+build freedom
+
+write books
+
+study abroad
+
+become healthy
+
+change career
+
+create meaningful life</code></pre>
+<p>These directions need operational goals.</p>
+<p>The self should ask:</p>
+<pre><code>What is the next milestone?
+
+What is this month’s goal?
+
+What is this week’s target?
+
+What is today’s action?
+
+What evidence should exist soon?</code></pre>
+<p>Long-term direction needs short-term embodiment.</p>
+<hr>
+</section>
+<section id="when-goals-are-borrowed" class="level2" data-number="18.46">
+<h2 data-number="18.46" class="anchored" data-anchor-id="when-goals-are-borrowed"><span class="header-section-number">18.46</span> When Goals Are Borrowed</h2>
+<p>Borrowed goals may enter the system quietly.</p>
+<p>They may come from:</p>
+<pre><code>family expectation
+
+school hierarchy
+
+market prestige
+
+peer comparison
+
+online success stories
+
+old shame
+
+status anxiety
+
+fear of being behind</code></pre>
+<p>The self should ask:</p>
+<pre><code>Whose goal is this?
+
+What value does it serve?
+
+Would I still pursue it without recognition?
+
+Does it fit my direction?
+
+Does it create evidence I actually need?
+
+What owned goal should replace it?</code></pre>
+<p>A goal system must be cleaned of unconscious borrowed goals.</p>
+<p>Otherwise the self may efficiently build someone else’s future.</p>
+<hr>
+</section>
+<section id="when-goals-never-complete" class="level2" data-number="18.47">
+<h2 data-number="18.47" class="anchored" data-anchor-id="when-goals-never-complete"><span class="header-section-number">18.47</span> When Goals Never Complete</h2>
+<p>Some systems are full of active goals but few completions.</p>
+<p>This creates self-doubt.</p>
+<p>The cause may be:</p>
+<pre><code>poor scope
+
+perfectionism
+
+too many goals
+
+unclear standards
+
+fear of feedback
+
+constant new starts
+
+weak time allocation
+
+low energy
+
+bad sequence</code></pre>
+<p>The self should ask:</p>
+<pre><code>What prevents completion?
+
+What is the smallest meaningful completion?
+
+What goal should be closed before anything new begins?
+
+What standard is enough for this stage?
+
+What completion would restore self-trust?</code></pre>
+<p>Completion should become a system priority if too many loops remain open.</p>
+<hr>
+</section>
+<section id="when-goals-change-too-often" class="level2" data-number="18.48">
+<h2 data-number="18.48" class="anchored" data-anchor-id="when-goals-change-too-often"><span class="header-section-number">18.48</span> When Goals Change Too Often</h2>
+<p>Changing goals too often creates instability.</p>
+<p>The self may be responding to discomfort, novelty, or fear.</p>
+<p>The self should ask:</p>
+<pre><code>Why do I keep changing goals?
+
+What discomfort appears before each change?
+
+What evidence supports the changes?
+
+What direction remains constant?
+
+What commitment horizon should I set before review?</code></pre>
+<p>A goal system needs stability.</p>
+<p>Not permanent rigidity.</p>
+<p>But enough stability to create evidence.</p>
+<hr>
+</section>
+<section id="goal-system-design-process" class="level2" data-number="18.49">
+<h2 data-number="18.49" class="anchored" data-anchor-id="goal-system-design-process"><span class="header-section-number">18.49</span> Goal System Design Process</h2>
+<p>A goal system can be designed through a process.</p>
+<pre><code>Name the long-term direction.
+
+List all current goals.
+
+Assign each goal to a life domain.
+
+Assign each goal to a time horizon.
+
+Classify goals by role.
+
+Identify the leading goal.
+
+Identify supporting goals.
+
+Identify foundation and maintenance goals.
+
+Identify waiting goals.
+
+Identify abandoned goals.
+
+Map conflicts and dependencies.
+
+Check goal load against capacity.
+
+Choose the next milestone.
+
+Define evidence for each active goal.
+
+Set review rhythm.
+
+Write revision rules.</code></pre>
+<p>This process turns scattered goals into a system.</p>
+<hr>
+</section>
+<section id="step-one-name-the-long-term-direction" class="level2" data-number="18.50">
+<h2 data-number="18.50" class="anchored" data-anchor-id="step-one-name-the-long-term-direction"><span class="header-section-number">18.50</span> Step One: Name the Long-Term Direction</h2>
+<p>The self begins with direction.</p>
+<pre><code>What future is this goal system meant to build?</code></pre>
+<p>Without direction, the system becomes a productivity machine.</p>
+<p>The direction may be:</p>
+<pre><code>study transition
+
+written contribution
+
+structured freedom
+
+health sustainability
+
+technical capability
+
+adult identity
+
+meaningful work</code></pre>
+<p>The direction gives goals coherence.</p>
+<hr>
+</section>
+<section id="step-two-list-current-goals" class="level2" data-number="18.51">
+<h2 data-number="18.51" class="anchored" data-anchor-id="step-two-list-current-goals"><span class="header-section-number">18.51</span> Step Two: List Current Goals</h2>
+<p>The self writes all current goals without judgment.</p>
+<pre><code>study English
+
+write book
+
+build project
+
+save money
+
+fix sleep
+
+research programs
+
+prepare CV
+
+exercise
+
+publish article
+
+talk to mentor
+
+organize notes
+
+reduce spending
+
+finish chapter
+
+learn tool</code></pre>
+<p>At this stage, the goal is visibility.</p>
+<p>The self should ask:</p>
+<pre><code>What goals am I consciously pursuing?
+
+What goals are secretly consuming attention?
+
+What goals do I feel guilty about?
+
+What goals did I inherit from others?
+
+What goals remain unfinished?</code></pre>
+<p>A hidden goal still consumes energy.</p>
+<p>It should be made visible.</p>
+<hr>
+</section>
+<section id="step-three-assign-life-domains" class="level2" data-number="18.52">
+<h2 data-number="18.52" class="anchored" data-anchor-id="step-three-assign-life-domains"><span class="header-section-number">18.52</span> Step Three: Assign Life Domains</h2>
+<p>Each goal should be assigned to a domain.</p>
+<pre><code>Health:
+sleep, movement, recovery.
+
+Money:
+expense tracking, runway, savings.
+
+Study:
+language, programs, applications.
+
+Writing:
+chapter, revision, feedback.
+
+Technical:
+project, prototype, documentation.
+
+Relationships:
+family communication, mentor contact.
+
+Identity:
+self-trust, courage, adult responsibility.</code></pre>
+<p>This shows where goals cluster.</p>
+<p>The self should ask:</p>
+<pre><code>Which domain has too many goals?
+
+Which domain has no goals but needs attention?
+
+Which domain is foundation?
+
+Which domain leads this season?</code></pre>
+<p>Domain mapping reveals imbalance.</p>
+<hr>
+</section>
+<section id="step-four-assign-time-horizons" class="level2" data-number="18.53">
+<h2 data-number="18.53" class="anchored" data-anchor-id="step-four-assign-time-horizons"><span class="header-section-number">18.53</span> Step Four: Assign Time Horizons</h2>
+<p>Each goal should be placed in a time horizon.</p>
+<pre><code>Daily:
+practice, write, track, move.
+
+Weekly:
+draft chapter, complete test, review money.
+
+Monthly:
+finish project component, complete program table, stabilize routine.
+
+Seasonal:
+application readiness, volume draft, runway milestone.
+
+Yearly:
+admission attempt, completed body of work, transition readiness.
+
+Long-Term:
+freedom, contribution, capability, health.</code></pre>
+<p>The self should ask:</p>
+<pre><code>Is this goal in the right horizon?
+
+Am I trying to complete a seasonal goal in one day?
+
+Am I leaving daily action undefined?
+
+What horizon is missing?</code></pre>
+<p>Time placement gives goals scale.</p>
+<hr>
+</section>
+<section id="step-five-classify-goal-role" class="level2" data-number="18.54">
+<h2 data-number="18.54" class="anchored" data-anchor-id="step-five-classify-goal-role"><span class="header-section-number">18.54</span> Step Five: Classify Goal Role</h2>
+<p>Each goal receives a role.</p>
+<pre><code>leading
+
+supporting
+
+foundation
+
+maintenance
+
+growth
+
+output
+
+decision
+
+repair
+
+boundary
+
+waiting
+
+abandoned</code></pre>
+<p>For example:</p>
+<pre><code>Goal:
+Complete diagnostic test.
+
+Role:
+Leading or supporting, depending on the season.</code></pre>
+<pre><code>Goal:
+Protect sleep.
+
+Role:
+Foundation and maintenance.</code></pre>
+<pre><code>Goal:
+Build prototype.
+
+Role:
+Growth and output.</code></pre>
+<pre><code>Goal:
+Do not start new book project.
+
+Role:
+Boundary.</code></pre>
+<p>Role classification prevents confusion.</p>
+<hr>
+</section>
+<section id="step-six-choose-the-leading-goal" class="level2" data-number="18.55">
+<h2 data-number="18.55" class="anchored" data-anchor-id="step-six-choose-the-leading-goal"><span class="header-section-number">18.55</span> Step Six: Choose the Leading Goal</h2>
+<p>The self chooses one lead.</p>
+<pre><code>What goal must lead this period?</code></pre>
+<p>The lead should be based on:</p>
+<pre><code>direction
+
+bottleneck
+
+evidence
+
+urgency
+
+season
+
+capacity
+
+dependency
+
+leverage</code></pre>
+<p>The self should ask:</p>
+<pre><code>If I complete only one goal this period, which one changes the path most?</code></pre>
+<p>This question forces priority.</p>
+<hr>
+</section>
+<section id="step-seven-protect-foundation-goals" class="level2" data-number="18.56">
+<h2 data-number="18.56" class="anchored" data-anchor-id="step-seven-protect-foundation-goals"><span class="header-section-number">18.56</span> Step Seven: Protect Foundation Goals</h2>
+<p>After choosing the lead, the self defines minimum protections.</p>
+<pre><code>What must not collapse while this goal leads?</code></pre>
+<p>Examples:</p>
+<pre><code>sleep minimum
+
+basic movement
+
+money review
+
+family communication
+
+emotional recovery
+
+workspace order
+
+weekly review</code></pre>
+<p>Foundation goals should be small enough to sustain.</p>
+<p>They should not compete with the lead unless the foundation itself is the lead.</p>
+<hr>
+</section>
+<section id="step-eight-map-dependencies" class="level2" data-number="18.57">
+<h2 data-number="18.57" class="anchored" data-anchor-id="step-eight-map-dependencies"><span class="header-section-number">18.57</span> Step Eight: Map Dependencies</h2>
+<p>The self maps what depends on what.</p>
+<pre><code>Application depends on program requirements.
+
+Practice plan depends on diagnostic.
+
+Revision depends on draft.
+
+Portfolio depends on prototype.
+
+Transition depends on runway.
+
+Expansion depends on stabilization.</code></pre>
+<p>The self should ask:</p>
+<pre><code>What dependency is missing?
+
+What goal is blocked?
+
+What prerequisite must be built first?</code></pre>
+<p>Dependency mapping improves sequence.</p>
+<hr>
+</section>
+<section id="step-nine-check-goal-load" class="level2" data-number="18.58">
+<h2 data-number="18.58" class="anchored" data-anchor-id="step-nine-check-goal-load"><span class="header-section-number">18.58</span> Step Nine: Check Goal Load</h2>
+<p>The self checks total load.</p>
+<pre><code>Can I carry this goal set?</code></pre>
+<p>The self should examine:</p>
+<pre><code>time load
+
+energy load
+
+attention load
+
+emotional load
+
+health load
+
+money load
+
+decision load</code></pre>
+<p>Then ask:</p>
+<pre><code>What should be reduced?
+
+What should wait?
+
+What should become maintenance only?
+
+What should be abandoned?
+
+What goal is too expensive right now?</code></pre>
+<p>Load checking protects the self from overcommitment.</p>
+<hr>
+</section>
+<section id="step-ten-define-evidence" class="level2" data-number="18.59">
+<h2 data-number="18.59" class="anchored" data-anchor-id="step-ten-define-evidence"><span class="header-section-number">18.59</span> Step Ten: Define Evidence</h2>
+<p>Every active goal should have evidence.</p>
+<pre><code>What will exist when this goal is completed?</code></pre>
+<p>Examples:</p>
+<pre><code>diagnostic score
+
+chapter draft
+
+prototype
+
+README
+
+program table
+
+runway calculation
+
+sleep log
+
+feedback note
+
+submitted application
+
+decision document</code></pre>
+<p>If a goal has no evidence, revise it.</p>
+<p>Evidence makes goals reviewable.</p>
+<hr>
+</section>
+<section id="step-eleven-set-review-rhythm" class="level2" data-number="18.60">
+<h2 data-number="18.60" class="anchored" data-anchor-id="step-eleven-set-review-rhythm"><span class="header-section-number">18.60</span> Step Eleven: Set Review Rhythm</h2>
+<p>The system needs review.</p>
+<pre><code>Daily:
+execution check.
+
+Weekly:
+goal progress.
+
+Monthly:
+system load and evidence.
+
+Seasonal:
+milestone and priority.
+
+Yearly:
+direction and major evidence.</code></pre>
+<p>The self should ask:</p>
+<pre><code>When will I review the active goals?
+
+What evidence will I use?
+
+What can change at each review level?
+
+What should not be changed too quickly?</code></pre>
+<p>Review rhythm prevents both drift and overreaction.</p>
+<hr>
+</section>
+<section id="step-twelve-write-revision-rules" class="level2" data-number="18.61">
+<h2 data-number="18.61" class="anchored" data-anchor-id="step-twelve-write-revision-rules"><span class="header-section-number">18.61</span> Step Twelve: Write Revision Rules</h2>
+<p>The system should define how goals change.</p>
+<p>Examples:</p>
+<pre><code>If health drops below minimum,
+reduce output goals and activate recovery goal.</code></pre>
+<pre><code>If diagnostic gap is larger than expected,
+extend preparation timeline.</code></pre>
+<pre><code>If prototype scope expands,
+cut to core function.</code></pre>
+<pre><code>If writing stalls from overexpansion,
+freeze new material and prioritize completion.</code></pre>
+<pre><code>If money risk increases,
+pause major transition decisions.</code></pre>
+<p>Revision rules prevent emotional chaos.</p>
+<p>They make the goal system adaptive.</p>
+<hr>
+</section>
+<section id="goal-system-template" class="level2" data-number="18.62">
+<h2 data-number="18.62" class="anchored" data-anchor-id="goal-system-template"><span class="header-section-number">18.62</span> Goal System Template</h2>
+<p>A goal system can be written as:</p>
+<pre><code>Long-Term Direction:
+What future is being built?
+
+Current Season:
+What stage am I in?
+
+Leading Goal:
+What goal leads now?
+
+Why It Leads:
+What bottleneck, milestone, or value makes it lead?
+
+Supporting Goals:
+What goals support the lead?
+
+Foundation Goals:
+What must be protected?
+
+Maintenance Goals:
+What must be kept stable?
+
+Growth Goals:
+What capability is being built?
+
+Output Goals:
+What artifacts or evidence should exist?
+
+Decision Goals:
+What choices must be made?
+
+Repair Goals:
+What foundation needs repair?
+
+Boundary Goals:
+What must be stopped or limited?
+
+Waiting Goals:
+What matters but not now?
+
+Abandoned Goals:
+What should be released?
+
+Dependencies:
+What depends on what?
+
+Conflicts:
+What goals compete?
+
+Goal Load:
+Can the system carry this?
+
+Evidence:
+What proves progress?
+
+Review Rhythm:
+When will the system be reviewed?
+
+Revision Rules:
+What evidence changes the system?</code></pre>
+<p>This template turns goals into architecture.</p>
+<hr>
+</section>
+<section id="condensed-goal-system-template" class="level2" data-number="18.63">
+<h2 data-number="18.63" class="anchored" data-anchor-id="condensed-goal-system-template"><span class="header-section-number">18.63</span> Condensed Goal System Template</h2>
+<p>A shorter working version can be:</p>
+<pre><code>Direction:
+Where am I moving?
+
+This Season:
+What is this period for?
+
+Lead Goal:
+What leads now?
+
+Support:
+What helps it?
+
+Foundation:
+What must not collapse?
+
+Evidence:
+What should exist?
+
+Waiting:
+What will not be pursued now?
+
+Boundary:
+What must be refused?
+
+Review:
+When will I reassess?</code></pre>
+<p>This version is useful for weekly planning.</p>
+<p>A system must be simple enough to use.</p>
+<hr>
+</section>
+<section id="example-goal-system-for-study-transition" class="level2" data-number="18.64">
+<h2 data-number="18.64" class="anchored" data-anchor-id="example-goal-system-for-study-transition"><span class="header-section-number">18.64</span> Example: Goal System for Study Transition</h2>
+<pre><code>Long-Term Direction:
+Use study as structured transition into stronger capability and future agency.
+
+Current Season:
+Preparation and baseline.
+
+Leading Goal:
+Complete language diagnostic and program requirement research.
+
+Why It Leads:
+Language score and program fit determine application strategy.
+
+Supporting Goals:
+Create program comparison table.
+Draft application narrative outline.
+Collect document requirements.
+Identify portfolio evidence gap.
+
+Foundation Goals:
+Protect sleep, money baseline, and emotional stability.
+
+Maintenance Goals:
+Weekly review of finances and health.
+
+Growth Goals:
+Targeted language practice.
+Technical or writing evidence-building.
+
+Output Goals:
+Diagnostic report, program table, draft CV, project artifact.
+
+Decision Goals:
+Decide target programs and application timeline.
+
+Repair Goals:
+Repair weak routine if preparation becomes chaotic.
+
+Boundary Goals:
+Do not choose programs only by prestige.
+Do not start unrelated large projects.
+
+Waiting Goals:
+Public expansion, new unrelated book projects, premature relocation planning.
+
+Abandoned Goals:
+Prestige-only comparison and vague fantasy planning.
+
+Dependencies:
+Practice plan depends on diagnostic.
+Statement depends on program fit.
+Application depends on documents and score.
+
+Conflicts:
+Study preparation competes with writing and technical projects for attention.
+
+Goal Load:
+Keep active goals limited to baseline, program research, and one evidence project.
+
+Evidence:
+Score baseline, program table, application gap list.
+
+Review Rhythm:
+Weekly preparation review. Monthly application readiness review.
+
+Revision Rules:
+If score gap is large, extend timeline. If program fit is weak, revise target list.</code></pre>
+<p>This system makes study preparation governable.</p>
+<hr>
+</section>
+<section id="example-goal-system-for-written-contribution" class="level2" data-number="18.65">
+<h2 data-number="18.65" class="anchored" data-anchor-id="example-goal-system-for-written-contribution"><span class="header-section-number">18.65</span> Example: Goal System for Written Contribution</h2>
+<pre><code>Long-Term Direction:
+Build serious written contribution.
+
+Current Season:
+Construction and completion.
+
+Leading Goal:
+Complete the current manuscript part.
+
+Why It Leads:
+Completion is the bottleneck before revision and feedback.
+
+Supporting Goals:
+Organize notes.
+Draft remaining sections.
+Create revision checklist.
+Prepare feedback questions.
+
+Foundation Goals:
+Protect sleep, body rhythm, and financial order.
+
+Maintenance Goals:
+Daily writing continuity and weekly review.
+
+Growth Goals:
+Improve structural clarity and examples.
+
+Output Goals:
+Completed part draft and revision notes.
+
+Decision Goals:
+Decide whether the part is ready for feedback.
+
+Repair Goals:
+Repair unfinished sections and reduce structural confusion.
+
+Boundary Goals:
+Do not add new book projects.
+Do not redesign the whole system before completing the part.
+
+Waiting Goals:
+Public launch, new volume planning, large audience strategy.
+
+Abandoned Goals:
+Endless restructuring as avoidance.
+
+Dependencies:
+Revision depends on draft completion.
+Feedback depends on shareable artifact.
+
+Conflicts:
+Writing competes with technical building and study preparation for deep attention.
+
+Goal Load:
+One leading writing output plus foundation maintenance.
+
+Evidence:
+Part draft, revision checklist, feedback-ready version.
+
+Review Rhythm:
+Weekly chapter review. Monthly part review.
+
+Revision Rules:
+If scope expands, freeze additions and complete current draft. If feedback shows confusion, revise structure before adding more.</code></pre>
+<p>This system protects completion.</p>
+<hr>
+</section>
+<section id="example-goal-system-for-structured-freedom" class="level2" data-number="18.66">
+<h2 data-number="18.66" class="anchored" data-anchor-id="example-goal-system-for-structured-freedom"><span class="header-section-number">18.66</span> Example: Goal System for Structured Freedom</h2>
+<pre><code>Long-Term Direction:
+Build structured freedom and agency.
+
+Current Season:
+Baseline and resource building.
+
+Leading Goal:
+Create financial runway map.
+
+Why It Leads:
+Freedom decisions depend on runway, risk, and options.
+
+Supporting Goals:
+Track monthly expenses.
+Define savings target.
+Reduce spending leakage.
+Map future options.
+Build portable project evidence.
+
+Foundation Goals:
+Health, emergency buffer, family communication.
+
+Maintenance Goals:
+Weekly money review and body check-in.
+
+Growth Goals:
+Portable skill and decision-making capability.
+
+Output Goals:
+Runway sheet, option map, risk boundary document.
+
+Decision Goals:
+Define transition threshold.
+
+Repair Goals:
+Repair financial vagueness and reduce fear-based spending.
+
+Boundary Goals:
+Do not make irreversible transition before risk threshold.
+Do not confuse escape with freedom.
+
+Waiting Goals:
+Major transition, relocation, large public risk.
+
+Abandoned Goals:
+Status consumption and fantasy exit.
+
+Dependencies:
+Transition depends on runway and fallback.
+Runway depends on expense baseline.
+Option map depends on skill and research.
+
+Conflicts:
+Saving may conflict with training or project costs.
+Freedom may conflict with security.
+
+Goal Load:
+Keep money map, one skill project, and health foundation active.
+
+Evidence:
+Expense baseline, runway calculation, option map, project artifact.
+
+Review Rhythm:
+Monthly runway review.
+
+Revision Rules:
+If runway is below threshold, delay transition and build base. If health weakens, reduce risk.</code></pre>
+<p>This system makes freedom staged.</p>
+<hr>
+</section>
+<section id="example-goal-system-for-health-sustainability" class="level2" data-number="18.67">
+<h2 data-number="18.67" class="anchored" data-anchor-id="example-goal-system-for-health-sustainability"><span class="header-section-number">18.67</span> Example: Goal System for Health Sustainability</h2>
+<pre><code>Long-Term Direction:
+Build sustainable health as the foundation of life direction.
+
+Current Season:
+Repair and stabilization.
+
+Leading Goal:
+Track sleep, energy, and body signals for two weeks while protecting bedtime.
+
+Why It Leads:
+Body baseline is needed before increasing ambition.
+
+Supporting Goals:
+Adjust workstation.
+Add gentle movement.
+Reduce obvious strain.
+Review workload.
+
+Foundation Goals:
+Sleep, recovery, safe movement, emotional steadiness.
+
+Maintenance Goals:
+Daily body check-in and weekly health review.
+
+Growth Goals:
+Build body awareness and sustainable rhythm.
+
+Output Goals:
+Two-week health log and trigger analysis.
+
+Decision Goals:
+Decide whether professional support or routine revision is needed.
+
+Repair Goals:
+Repair sleep rhythm and overwork pattern.
+
+Boundary Goals:
+Do not increase workload if symptoms worsen.
+Do not treat body signals as inconvenience.
+
+Waiting Goals:
+Intense training, high-output schedule, large new commitments.
+
+Abandoned Goals:
+Bodyless ambition and panic productivity.
+
+Dependencies:
+Capacity growth depends on baseline stability.
+Work expansion depends on recovery.
+
+Conflicts:
+Health may slow visible achievement temporarily.
+
+Goal Load:
+Health leads; output goals are reduced to minimum continuity.
+
+Evidence:
+Sleep log, energy record, symptom pattern, routine adjustment.
+
+Review Rhythm:
+Weekly health review.
+
+Revision Rules:
+If symptoms worsen, reduce load and seek support. If stable, gradually increase capacity.</code></pre>
+<p>This system makes health a lead priority when needed.</p>
+<hr>
+</section>
+<section id="example-goal-system-for-technical-capability" class="level2" data-number="18.68">
+<h2 data-number="18.68" class="anchored" data-anchor-id="example-goal-system-for-technical-capability"><span class="header-section-number">18.68</span> Example: Goal System for Technical Capability</h2>
+<pre><code>Long-Term Direction:
+Build technical capability and portfolio evidence.
+
+Current Season:
+Construction of one bounded artifact.
+
+Leading Goal:
+Build minimal working prototype.
+
+Why It Leads:
+Completed evidence matters more than broad exploration.
+
+Supporting Goals:
+Define scope.
+Set up environment.
+Read required documentation.
+Write README.
+Test core flow.
+
+Foundation Goals:
+Health, focused time, scope control.
+
+Maintenance Goals:
+Weekly project review and code organization.
+
+Growth Goals:
+Learn by building and debugging.
+
+Output Goals:
+Working prototype, README, architecture note, demo.
+
+Decision Goals:
+Decide whether to expand, publish, or archive after prototype works.
+
+Repair Goals:
+Repair unclear scope and unfinished setup.
+
+Boundary Goals:
+Do not add features before core function works.
+Do not chase tools without output.
+
+Waiting Goals:
+Full platform, advanced features, public launch.
+
+Abandoned Goals:
+Unbounded tool exploration.
+
+Dependencies:
+Documentation depends on working core.
+Portfolio depends on completed artifact.
+
+Conflicts:
+Technical project competes with writing and study for deep work time.
+
+Goal Load:
+One prototype only, with limited support tasks.
+
+Evidence:
+Running code, setup instructions, architecture note.
+
+Review Rhythm:
+Weekly build review. Milestone review when prototype runs.
+
+Revision Rules:
+If scope blocks completion, cut features. If core works, document before expanding.</code></pre>
+<p>This system turns capability into proof.</p>
+<hr>
+</section>
+<section id="goal-system-and-identity" class="level2" data-number="18.69">
+<h2 data-number="18.69" class="anchored" data-anchor-id="goal-system-and-identity"><span class="header-section-number">18.69</span> Goal System and Identity</h2>
+<p>A goal system shapes identity.</p>
+<p>The self becomes the kind of person who repeatedly chooses certain goals, protects certain foundations, completes certain evidence, and revises certain paths.</p>
+<p>For example:</p>
+<pre><code>A person who repeatedly completes writing goals becomes someone with writing evidence.
+
+A person who repeatedly protects sleep becomes someone who respects the body.
+
+A person who builds runway becomes someone with more agency.
+
+A person who finishes prototypes becomes someone with technical evidence.
+
+A person who reviews goals honestly becomes someone with self-trust.</code></pre>
+<p>The self should ask:</p>
+<pre><code>What identity does my goal system build?
+
+What identity does it prevent?
+
+What old identity does it weaken?
+
+What future self becomes believable through these goals?</code></pre>
+<p>Identity does not only come from declarations.</p>
+<p>It comes from goal systems sustained across time.</p>
+<hr>
+</section>
+<section id="goal-system-and-self-trust" class="level2" data-number="18.70">
+<h2 data-number="18.70" class="anchored" data-anchor-id="goal-system-and-self-trust"><span class="header-section-number">18.70</span> Goal System and Self-Trust</h2>
+<p>Self-trust grows when the self can see that goals are not random.</p>
+<p>The self can say:</p>
+<pre><code>I know what leads.
+
+I know what supports.
+
+I know what waits.
+
+I know what must be protected.
+
+I know what evidence I am creating.
+
+I know how to review.
+
+I know how to revise.</code></pre>
+<p>This creates internal reliability.</p>
+<p>Self-trust is damaged by chaotic goal changes, endless unfinished goals, and invisible commitments.</p>
+<p>It is strengthened by clear goal architecture.</p>
+<hr>
+</section>
+<section id="goal-system-and-freedom" class="level2" data-number="18.71">
+<h2 data-number="18.71" class="anchored" data-anchor-id="goal-system-and-freedom"><span class="header-section-number">18.71</span> Goal System and Freedom</h2>
+<p>A goal system increases freedom because it reduces unconscious control.</p>
+<p>Without a system, the self may be controlled by:</p>
+<pre><code>urgent tasks
+
+comparison
+
+fear
+
+old identity
+
+random opportunity
+
+mood
+
+shame
+
+external approval
+
+unfinished loops</code></pre>
+<p>With a system, the self can choose.</p>
+<p>It can say:</p>
+<pre><code>This goal leads now.
+
+This goal waits.
+
+This opportunity is not aligned.
+
+This risk is too high.
+
+This foundation must be protected.
+
+This evidence matters.</code></pre>
+<p>Freedom is not the absence of goals.</p>
+<p>Freedom is the ability to choose goals according to owned values.</p>
+<hr>
+</section>
+<section id="goal-system-design" class="level2" data-number="18.72">
+<h2 data-number="18.72" class="anchored" data-anchor-id="goal-system-design"><span class="header-section-number">18.72</span> Goal System Design</h2>
+<p>Goal system design is the architecture of action.</p>
+<p>It prevents the self from living under scattered intention.</p>
+<p>The mature position is:</p>
+<pre><code>I will not treat goals as isolated wishes.
+
+I will organize goals across life domains.
+
+I will place goals in time horizons.
+
+I will distinguish leading, supporting, foundation, maintenance, growth, output, decision, repair, boundary, waiting, and abandoned goals.
+
+I will map conflicts and dependencies.
+
+I will check goal load against real capacity.
+
+I will create evidence.
+
+I will protect minimum conditions.
+
+I will review goals at the right rhythm.
+
+I will revise goals when evidence requires it.
+
+I will abandon goals that no longer serve the direction.
+
+I will let my goal system build the future self.</code></pre>
+<p>A goal says:</p>
+<pre><code>Reach this target.</code></pre>
+<p>A goal system says:</p>
+<pre><code>Let each target know its place, role, time, relationship, evidence, cost, and priority.</code></pre>
+<p>A life direction becomes stronger when its goals stop fighting each other.</p>
+<p>They become ordered.</p>
+<p>They become sequenced.</p>
+<p>They become reviewable.</p>
+<p>They become a system.</p>
+<p>That is the work of this chapter.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./cp16.html" class="pagination-link" aria-label="Life Direction Map">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Life Direction Map</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./cp18.html" class="pagination-link" aria-label="From Possibility to Commitment">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">From Possibility to Commitment</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
